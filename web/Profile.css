@@ -1,0 +1,78 @@
+.row {
+    margin: 0;
+    width: 100%;
+}
+.col-sm-4, .col-sm-8 {
+    margin-top: 30px;
+    padding: 0;
+}
+.col-sm-4, input, .panel, .form-control, .list-group li a, .alert {
+    font-family: monaco, Consolas, "Lucida Console", monospace;
+    font-size: 14px;
+    color: black;
+}
+.list-group {
+    width: 200px;
+    margin-left: 100px;
+    border: none;
+}
+.list-group li a {
+    text-decoration: none;
+}
+.active, .active a {
+    background-color: white !important;
+    color: blue !important;
+    border-color: #DDD !important;
+}
+input, .panel, .form-control, .alert {
+    width: 350px;
+    margin-left: 100px;
+}
+input[type=submit] {
+    background-color: white;
+    color: #3498DB;
+    font-weight: bold;
+    cursor: pointer;
+    border: 1.2px solid #3498DB;
+    border-radius: 6px;
+}
+input[type=submit]:hover {
+    color: white;
+    background-color: #3498DB;
+    border: none;
+}
+.form-control {
+    height: 44px;
+    box-shadow: none !important;
+    border: 1px solid black !important;
+    border-radius: 4px;
+}
+.panel {
+    margin-bottom: 2%;
+    border: none;
+    border: 1px solid gray;
+    text-align: center;
+}
+.textColor::-webkit-input-placeholder {
+    color: black;
+}
+.textColor:-moz-placeholder {
+    color: black;
+}
+@media only screen and (max-width: 768px) {
+    .list-group, .panel, input, .form-control, .alert {
+        margin: auto;
+    }
+    .list-group, .panel ,.alert {
+        margin-bottom: 30px;
+    }
+    .list-group, .alert {
+        width: 200px;
+    }
+    input[type=submit] {
+        margin-bottom: 65px;
+    }
+    .panel, input, .form-control {
+        width: 250px;
+    }
+}

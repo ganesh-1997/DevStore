@@ -1,0 +1,113 @@
+.row, .col-sm-12 {
+    margin: 0;
+    width: 100%;
+}
+.col-sm-4, .col-sm-8 {
+    padding: 0;
+}
+.list-group, .panel, .table, .btn-primary {
+    font-family: monaco, Consolas, "Lucida Console", monospace;
+    font-size: 14px;
+}
+.panel, .list-group {
+    margin-top: 30px !important;
+}
+.panel, .table {
+    width: 75% !important;
+    margin: auto;
+}
+.panel {
+    text-align: center;
+    border: 1px solid black;
+    box-shadow: none;
+    margin-bottom: 30px;
+}
+.table {
+    margin-bottom: 55px;
+    border: 1px solid #DDD;
+}
+.table tr, td, td a{
+    color: black;
+    text-decoration: none;
+}
+.list-group {
+    position: fixed;
+    width: 23%;
+    color: black;
+    border: 1px solid #b9f0e5;
+}
+.order {
+    width: 100%;   
+    height: 38px !important;
+    float: none !important;
+    color: #3498DB;
+    border: 1.2px solid #3498DB;
+    background-color: white;
+    cursor: pointer;
+    border-radius: 6px;
+}
+.order:hover {
+    opacity: 0.9;
+}
+.image, img {
+    width: 120px;
+    height: 120px;
+}
+.remove {
+    background: none  !important;
+    border: none !important;
+    color: black  !important;
+    width: auto;
+    padding: 0;
+    padding-top: 65px;
+    outline: none !important;
+}
+td a {
+    font-weight: bold;
+}
+.remove:hover, td a:hover {
+    color: blue !important;
+    text-decoration: none;
+}
+.price {
+    color: red;
+}
+.btn-primary {
+    float: left;
+    background-color: #2cd2b1!important;
+    font-weight: bold !important;
+    color: white;    
+    border: none !important;
+}
+.address {
+    box-shadow: 0 0 4px rgba(40,44,63,.08);
+    border: 1px solid #b9f0e5;
+    background:  #f4fdfb;
+    height: 296px;
+    width: 302px;
+}
+.name {
+    font-weight:600;
+}
+.name, .addressLine, .state, .city, .number, .edit-btn {
+    margin: 0;
+    padding: 5px 10px;
+    text-align: left !important;
+}
+.price {
+    color: red;
+}
+@media only screen and (max-width: 768px) {
+    .list-group {
+        position: relative !important;
+        width: 60%;
+        margin: auto;
+        margin-bottom: 15%;
+        width: 275px;
+        color: black;
+    }
+    .image, img {
+        width: 75px;
+        height: 75px;
+    }
+}

@@ -1,0 +1,56 @@
+input, .modal {
+    font-family: monaco, Consolas, "Lucida Console", monospace;
+    font-size: 14px;
+}
+input {
+    width: 55%;
+    margin: auto;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 3px;
+    display: block;
+}
+input[type=submit] {
+    font-family: Montserrat, sans-serif;
+    background-color: #3F73E6;
+    color: white;
+    cursor: pointer;
+    border: none;
+}
+input[type=submit]:hover {
+    opacity: 0.8;
+}
+.textColor::-webkit-input-placeholder {
+    color: red;
+}
+.textColor:-moz-placeholder {
+    color: red;
+    opacity: 1;
+}
+.textColor::-moz-placeholder {
+    color: red;
+    opacity: 1;
+}
+.textColor:-ms-input-placeholder {
+    color: red;
+}
+.textAlign {
+    text-align: center;
+    border: none;
+    background: none;
+}
+.modal {
+    top:5%;
+    outline: none;
+    overflow:auto;
+}
+.modal-title {
+    text-align: center;
+    color: black !important;
+}
+@media only screen and (max-width: 768px) {
+    input {
+        width: 80%;
+    }
+}

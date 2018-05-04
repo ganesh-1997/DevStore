@@ -18,8 +18,9 @@ import javax.servlet.http.HttpSession;
  * @author Ganesh
  */
 @WebServlet(name = "Password", urlPatterns = {"/Password"})
+
 public class Password extends HttpServlet {
-    
+
     private static final long serialVersionUID = 42L;
 
     /**
@@ -31,28 +32,31 @@ public class Password extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String oldPassword = request.getParameter("oldPassword");
-        String newPassword = request.getParameter("newPassword");
-        String confirmPassword = request.getParameter("confirmPassword");
-        HttpSession session = request.getSession();
-        String email = (String) session.getAttribute("email");
         Model.Password p = new Model.Password();
-        p.setOldPassword(oldPassword);
-        p.setNewPassword(newPassword);
-        p.setConfirmPassword(confirmPassword);
-        p.setEmail(email);
-        if (p.checkPassword() && p.updatePassword()) {
-            session.setAttribute("passwordUpdated", true);
+        HttpSession session = request.getSession();
+        /*Filtering URL Request*/
+        if (request.getParameter("oldPassword") != null
+                && request.getParameter("newPassword") != null
+                && request.getParameter("confirmPassword") != null
+                && session.getAttribute("email") != null) {
+            p.setOldPassword(request.getParameter("oldPassword"));
+            p.setNewPassword(request.getParameter("newPassword"));
+            p.setConfirmPassword(request.getParameter("confirmPassword"));
+            p.setEmail((String) session.getAttribute("email"));
+            if (p.checkPassword() && p.updatePassword()) {
+                session.setAttribute("passwordUpdated", true);
+            } else {
+                session.setAttribute("passwordUpdated", false);
+            }
+            request.getRequestDispatcher("Password.jsp").forward(request, response);
         } else {
-            session.setAttribute("passwordUpdated", false);
+            request.getRequestDispatcher("Shop.jsp").forward(request, response);
         }
-        response.sendRedirect("Password.jsp");
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -62,8 +66,7 @@ public class Password extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -76,8 +79,7 @@ public class Password extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 

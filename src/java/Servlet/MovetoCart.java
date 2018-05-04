@@ -19,8 +19,9 @@ import javax.servlet.http.HttpSession;
  * @author Ganesh
  */
 @WebServlet(name = "MovetoCart", urlPatterns = {"/MovetoCart"})
+
 public class MovetoCart extends HttpServlet {
-    
+
     private static final long serialVersionUID = 42L;
 
     /**
@@ -32,21 +33,28 @@ public class MovetoCart extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        String email = (String) session.getAttribute("email");
-        String productName = request.getParameter("productName");
-        String linkName = request.getParameter("linkName");
-        double price = Double.parseDouble(request.getParameter("price"));
         MoveToCart m = new MoveToCart();
-        m.setEmail(email);
-        m.setProductName(productName);
-        m.setLinkName(linkName);
-        m.setPrice(price);
-        m.moveToCart();
-        response.sendRedirect("Wishlist");
+        HttpSession session = request.getSession();
+        /*Filtering URL Request*/
+        if (session.getAttribute("email") != null
+                && request.getParameter("productName") != null
+                && request.getParameter("linkName") != null
+                && request.getParameter("price") != null) {
+            m.setEmail((String) session.getAttribute("email"));
+            m.setProductName(request.getParameter("productName"));
+            m.setLinkName(request.getParameter("linkName"));
+            m.setPrice(Double.parseDouble(request.getParameter("price")));
+            if (m.moveToCart()) {
+                session.setAttribute("moveToCart", "true");
+            } else {
+                session.setAttribute("moveToCart", "false");
+            }
+            request.getRequestDispatcher("Wishlist").forward(request, response);
+        } else {
+            request.getRequestDispatcher("/Shop.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -59,8 +67,7 @@ public class MovetoCart extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -73,8 +80,7 @@ public class MovetoCart extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 

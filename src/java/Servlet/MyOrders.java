@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
  * @author Ganesh
  */
 @WebServlet(name = "MyOrders", urlPatterns = {"/Orders"})
+
 public class MyOrders extends HttpServlet {
 
     private static final long serialVersionUID = 42L;
@@ -33,19 +34,22 @@ public class MyOrders extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        String email = (String) session.getAttribute("email");
         Orders.MyOrders m = new Orders.MyOrders();
-        m.setEmail(email);
-        List<OrderedProduct> orders = m.getOrder();
-        request.setAttribute("orders", orders);
-        request.getRequestDispatcher("/Orders.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        /*Filtering URL Request*/
+        if ((String) session.getAttribute("email") != null) {
+            m.setEmail((String) session.getAttribute("email"));
+            List<OrderedProduct> orders = m.getOrder();
+            request.setAttribute("orders", orders);
+            request.getRequestDispatcher("/Orders.jsp").forward(request, response);
+        } else {
+            request.getRequestDispatcher("/Shop.jsp").forward(request, response);
+        }
     }
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -55,8 +59,7 @@ public class MyOrders extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -69,8 +72,7 @@ public class MyOrders extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 

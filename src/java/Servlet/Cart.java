@@ -21,24 +21,28 @@ import javax.servlet.http.HttpSession;
  * @author Ganesh
  */
 @WebServlet("/Cart")
+
 public class Cart extends HttpServlet {
 
     private static final long serialVersionUID = 42L;
-    
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         CartDetails c = new CartDetails();
         HttpSession session = request.getSession();
-        String email = (String) session.getAttribute("email");
-        List<Product> products = c.getCartDetails(email);
-        request.setAttribute("products", products);
-        session.setAttribute("products", products);
-        session.setAttribute("bagTotal", c.getBagTotal());
-        session.setAttribute("cartTotal", c.getCartTotal());
-        session.setAttribute("itemCount", c.getItemCount());
-        session.setAttribute("deliveryCharge", c.getDeliveryCharge());
-        request.getRequestDispatcher("/Cart.jsp").forward(request, response);
+        /*Filtering URL Request*/
+        if ((String) session.getAttribute("email") != null) {
+            List<Product> products = c.getCartDetails((String) session.getAttribute("email"));
+            request.setAttribute("products", products);
+            session.setAttribute("products", products);
+            session.setAttribute("bagTotal", c.getBagTotal());
+            session.setAttribute("cartTotal", c.getCartTotal());
+            session.setAttribute("itemCount", c.getItemCount());
+            session.setAttribute("deliveryCharge", c.getDeliveryCharge());
+            request.getRequestDispatcher("/Cart.jsp").forward(request, response);
+        } else {
+            request.getRequestDispatcher("/Shop.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -51,8 +55,7 @@ public class Cart extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -65,8 +68,7 @@ public class Cart extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 

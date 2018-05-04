@@ -18,8 +18,9 @@ import javax.servlet.http.HttpSession;
  * @author Ganesh
  */
 @WebServlet(name = "SignIn", urlPatterns = {"/SignIn"})
+
 public class SignIn extends HttpServlet {
-    
+
     private static final long serialVersionUID = 42L;
 
     /**
@@ -34,26 +35,27 @@ public class SignIn extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        Model.SignIn s;
-        s = new Model.SignIn();
-        s.setEmail(email);
-        s.setPassword(password);
+        Model.SignIn s = new Model.SignIn();
         HttpSession session = request.getSession();
-        if (s.verifyData() && s.validateDetails()) {
-            session.setAttribute("email", email);
-            session.setAttribute("name", s.getName());
-            session.setAttribute("number", s.getNumber());
-            session.setAttribute("addressLine1", s.getAddressLine1());
-            session.setAttribute("addressLine2", s.getAddressLine2());
-            session.setAttribute("state", s.getState());
-            session.setAttribute("city", s.getCity());
-            session.setAttribute("pinCode", s.getPincode());
-        } else {
-            session.setAttribute("invalidDetails", "true");
+        /*Filtering URL Request*/
+        if (request.getParameter("email") != null
+                && request.getParameter("password") != null) {
+            s.setEmail(request.getParameter("email"));
+            s.setPassword(request.getParameter("password"));
+            if (s.verifyData() && s.validateDetails()) {
+                session.setAttribute("email", s.getEmail());
+                session.setAttribute("name", s.getName());
+                session.setAttribute("number", s.getNumber());
+                session.setAttribute("addressLine1", s.getAddressLine1());
+                session.setAttribute("addressLine2", s.getAddressLine2());
+                session.setAttribute("state", s.getState());
+                session.setAttribute("city", s.getCity());
+                session.setAttribute("pinCode", s.getPincode());
+            } else {
+                session.setAttribute("invalidDetails", "true");
+            }
         }
-        response.sendRedirect("Shop.jsp");
+        request.getRequestDispatcher("Shop.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -66,8 +68,7 @@ public class SignIn extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -80,8 +81,7 @@ public class SignIn extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 

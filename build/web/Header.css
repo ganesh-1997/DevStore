@@ -1,0 +1,94 @@
+/*Modal Styles*/
+@import url('Form.css');
+.navbar {
+    width: 100% !important;
+    height: 45px !important;
+    padding: 0;
+    border-bottom: 1px solid black;
+    border-radius: 0;
+    margin: 0;
+    background-color: #EEE;
+    color: black;          
+    font-family: Montserrat, sans-serif;
+    font-size: 15px;
+}
+.navbar-expand-md {
+    width: 100% !important;
+}
+.navbar-brand {
+    margin-left: 5% !important;
+    color: #3F73E6;
+    font-family: Josefin Sans, sans-serif;
+    font-size: 30px;
+    text-decoration: none;
+}
+.nav-item {
+    padding: 0 30px 0 10px;
+}
+.navbar-nav li a{
+    color: black;
+    cursor: pointer;
+}
+.navbar-nav li a:hover{
+    font-weight: bold;
+}
+.dropdown-menu {
+    min-width: 50px;
+    padding-bottom: 0;
+    border: 1px solid #BEBEBE;
+    box-shadow: none;
+    background-color: #EEE;
+    font: inherit;
+}
+.dropdown-item {
+    height: 45px;
+    border: none;
+    border-radius: 0;
+    color: black !important;
+    background-color: #EEE;
+    cursor: pointer;
+}
+.dropdown-item:hover, .dropdown-item:active, .dropdown-item:focus {
+    background-color: #EEE;
+    font-weight: bold;
+}
+.show {
+    margin-top: 4px;
+}
+li.nav-item.dropdown.show {
+    margin: 0;
+}
+.fixed-bottom {
+    width: 100% !important;
+    border-top: 1px solid black;
+    margin-bottom: -1px;
+}
+.navbar-text {
+    width: 100%;
+    padding: 1% 0;
+    text-align: center;
+}
+p.navbar-text {
+    margin: 0 !important; 
+}
+#Address {
+    padding-right: 0 !important;
+}
+/*For Small Screens*/
+@media only screen and (max-width : 767.5px) {
+    .navbar-collapse {
+        z-index: 999;
+        width: 100% !important;
+        margin-top: 1px;
+        background-color: #EEE;
+    }
+    .navbar-brand {
+       margin: auto !important;
+    }
+    .navbar-toggler, .navbar-brand {
+        height: 100%;
+    }
+    .nav-link.dropdown-toggle, .nav-link{
+        padding-left: 3% !important;
+    }
+}

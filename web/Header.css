@@ -1,114 +1,94 @@
-@import url("Form.css");
+/*Modal Styles*/
+@import url('Form.css');
 .navbar {
-    margin: 0;
+    width: 100% !important;
     height: 45px !important;
-    background-color: #EEE;                
-    font-family: Montserrat, sans-serif;
-    font-size:14px;
-    color: black;
-    border-bottom: 1px solid black !important;
-    border-radius: 0;
-}
-.container-fluid, .navbar-collapse {
     padding: 0;
+    border-bottom: 1px solid black;
+    border-radius: 0;
+    margin: 0;
+    background-color: #EEE;
+    color: black;          
+    font-family: Montserrat, sans-serif;
+    font-size: 15px;
 }
-.navbar-nav {
-    margin-left: 3.4%;
+.navbar-expand-md {
+    width: 100% !important;
+}
+.navbar-brand {
+    margin-left: 5% !important;
+    color: #3F73E6;
+    font-family: Josefin Sans, sans-serif;
+    font-size: 30px;
+    text-decoration: none;
+}
+.nav-item {
+    padding: 0 30px 0 10px;
 }
 .navbar-nav li a{
-    padding: 14px;
-    outline: 0 !important;
     color: black;
     cursor: pointer;
 }
 .navbar-nav li a:hover{
     font-weight: bold;
 }
-.navbar-nav li a.logo {
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 30px;
-    font-weight: bold;
-    color: #3F73E6;
-    text-decoration: none;
-}
-.navbar-right {
-    margin-right: 5%;
-}
-.dropdown {
-    cursor: pointer;
-}
 .dropdown-menu {
-    padding: 0;
-    min-width: 55px;
-    background-color: #EEE;
-    font: inherit;
-    color: black !important;
+    min-width: 50px;
+    padding-bottom: 0;
     border: 1px solid #BEBEBE;
     box-shadow: none;
-}
-.dropdown-menu li {
-    vertical-align: middle;
-}
-.dropdown-menu li a {
-    min-width: 50px;
-    height: 45px;
     background-color: #EEE;
+    font: inherit;
+}
+.dropdown-item {
+    height: 45px;
     border: none;
     border-radius: 0;
-}
-.dropdown-menu li a:first-child {
-    padding-top: 10px;
-}
-.dropdown-menu li a:hover, .dropdown-menu li a:active, .dropdown-menu li a:focus {
-    background-color: #EEE;
-    font-weight: bolder;
     color: black !important;
-    outline: none !important;
+    background-color: #EEE;
+    cursor: pointer;
 }
-.divider {
-    background-color: #BEBEBE !important;
-    padding: 0;
+.dropdown-item:hover, .dropdown-item:active, .dropdown-item:focus {
+    background-color: #EEE;
+    font-weight: bold;
 }
-.navbar-fixed-bottom {
+.show {
+    margin-top: 4px;
+}
+li.nav-item.dropdown.show {
+    margin: 0;
+}
+.fixed-bottom {
     width: 100% !important;
     border-top: 1px solid black;
-    border-bottom: none !important;
+    margin-bottom: -1px;
 }
 .navbar-text {
-    margin: 0;
+    width: 100%;
     padding: 1% 0;
-    width: 100% !important;
-    display: inline-block;
-    float: none;
     text-align: center;
 }
-@media only screen and (max-width : 768px) {
+p.navbar-text {
+    margin: 0 !important; 
+}
+#Address {
+    padding-right: 0 !important;
+}
+/*For Small Screens*/
+@media only screen and (max-width : 767.5px) {
     .navbar-collapse {
+        z-index: 999;
         width: 100% !important;
-        margin: 0 !important;
-    }
-    .navbar-toggle {
-        margin: 0;
-        padding: 14px;
-        float: left;
-        color: black;
-        cursor: pointer;
-        text-decoration: none !important;
-    }
-    .navbar-toggle:active, .navbar-toggle:focus, .navbar-toggle:hover {
-        color: black;
-        font-weight: bolder;
-    }
-    .logo, .navbar-nav  {
-        display: none;
-    }
-    .dropdown-menu {
-        min-width: 55px;
+        margin-top: 1px;
         background-color: #EEE;
-        font: inherit;
-        cursor: pointer;
-        box-shadow: none;
-        border-radius: 0;
-        border: 1px solid #BEBEBE !important;
+    }
+    .navbar-brand {
+       margin: auto !important;
+    }
+    .navbar-toggler, .navbar-brand {
+        height: 100%;
+    }
+    .nav-link.dropdown-toggle, .nav-link{
+        padding-left: 3% !important;
     }
 }

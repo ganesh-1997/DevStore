@@ -92,7 +92,12 @@ public class Order {
         this.products = products;
     }
 
+    
+
     public boolean placeOrder() {
+        if(products.isEmpty()) {
+            return false;
+        }
         DataSource dataSource;
         GetDataSource d = new GetDataSource();
         try {
@@ -114,7 +119,7 @@ public class Order {
             preparedStatement.setString(13, city);
             preparedStatement.setString(14, pinCode);
             preparedStatement.executeUpdate();
-            addOrderProducts();
+            return addOrderProducts();
         } catch (NamingException | SQLException ex) {
         }
         return false;
@@ -158,4 +163,5 @@ public class Order {
     private Timestamp getOrderedDate() {
         return Timestamp.from(java.time.Instant.now());
     }
+
 }

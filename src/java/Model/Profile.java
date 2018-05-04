@@ -32,6 +32,10 @@ public class Profile {
     public boolean checkNumber() {
         return (number.matches("[0-9]+") && number.length() == 10);
     }
+    
+    public String getNumber() {
+        return this.number;
+    }
 
     public boolean updateNumber() {
         DataSource dataSource;

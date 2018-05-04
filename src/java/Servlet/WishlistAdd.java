@@ -12,14 +12,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Ganesh
  */
 @WebServlet(name = "WishlistAdd", urlPatterns = {"/WishlistAdd"})
+
 public class WishlistAdd extends HttpServlet {
-    
+
     private static final long serialVersionUID = 42L;
 
     /**
@@ -35,12 +37,24 @@ public class WishlistAdd extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         AddToWishlist a = new AddToWishlist();
-        a.setEmail((String)request.getSession().getAttribute("email"));
-        a.setProductName(request.getParameter("productName"));
-        a.setLinkName(request.getParameter("linkName"));
-        a.setPrice(Double.valueOf(request.getParameter("price")));
-        a.addToWishlist();
-        request.getRequestDispatcher("Wishlist").forward(request, response);
+        HttpSession session = request.getSession();
+        if (request.getSession().getAttribute("email") != null
+                && request.getParameter("productName") != null
+                && request.getParameter("linkName") != null
+                && request.getParameter("price") != null) {
+            a.setEmail((String) request.getSession().getAttribute("email"));
+            a.setProductName(request.getParameter("productName"));
+            a.setLinkName(request.getParameter("linkName"));
+            a.setPrice(Double.valueOf(request.getParameter("price")));
+            if (a.addToWishlist()) {
+                session.setAttribute("addToList", "true");
+            } else {
+                session.setAttribute("addToList", "false");
+            }
+            request.getRequestDispatcher("Wishlist").forward(request, response);
+        } else {
+            request.getRequestDispatcher("/Shop.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -53,8 +67,7 @@ public class WishlistAdd extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -67,8 +80,7 @@ public class WishlistAdd extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 

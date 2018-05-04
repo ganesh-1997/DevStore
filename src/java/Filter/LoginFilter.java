@@ -6,7 +6,6 @@
 package Filter;
 
 import java.io.IOException;
-import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -22,20 +21,22 @@ import javax.servlet.http.HttpSession;
  *
  * @author Ganesh
  */
-@WebFilter(filterName = "LoginFilter", 
-        urlPatterns = {"/Address.jsp", "/Password.jsp", "/Profile.jsp", "/Cart.jsp", "/Wishlist.jsp", "/Checkout.jsp"}, 
-        servletNames = {"Cart", "Wishlist", "Order", "Orders"})
+@WebFilter(filterName = "LoginFilter",
+        urlPatterns = {"/Address.jsp", "/Cart.jsp", "/Checkout.jsp", "/Orders.jsp", "/Password.jsp", "/Profile.jsp", "/Wishlist.jsp"},
+        servletNames = {"Cart", "Order", "Orders", "Wishlist"})
+
 public class LoginFilter implements Filter {
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response,
-            FilterChain chain)
-            throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
-        if(session.getAttribute("email") == null) {
-            res.sendRedirect("Shop.jsp");
+        try {
+            if (session.getAttribute("email") == null) {
+                res.sendRedirect("Shop.jsp");
+            }
+        } catch (IOException ex) {
         }
         chain.doFilter(request, response);
     }
@@ -49,4 +50,5 @@ public class LoginFilter implements Filter {
     public void init(FilterConfig filterConfig) {
 
     }
+    
 }

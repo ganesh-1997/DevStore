@@ -21,8 +21,9 @@ import javax.servlet.http.HttpSession;
  * @author Ganesh
  */
 @WebServlet(name = "Wishlist", urlPatterns = {"/Wishlist"})
+
 public class Wishlist extends HttpServlet {
-    
+
     private static final long serialVersionUID = 42L;
 
     /**
@@ -40,9 +41,11 @@ public class Wishlist extends HttpServlet {
         WishlistDetails c = new WishlistDetails();
         HttpSession session = request.getSession();
         String email = (String) session.getAttribute("email");
-        List<Product> product = c.getWishlistDetails(email);
-        request.setAttribute("products", product);
-        request.getRequestDispatcher("/Wishlist.jsp").forward(request, response);
+        if (email != null) {
+            List<Product> product = c.getWishlistDetails(email);
+            request.setAttribute("products", product);
+            request.getRequestDispatcher("/Wishlist.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

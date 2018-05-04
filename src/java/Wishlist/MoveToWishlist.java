@@ -45,4 +45,5 @@ public class MoveToWishlist {
         addToWishlist.setPrice(price);
         return removeFromCart.removeFromCart() && addToWishlist.addToWishlist();
     }
+    
 }

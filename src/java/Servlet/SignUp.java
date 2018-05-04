@@ -18,8 +18,9 @@ import javax.servlet.http.HttpSession;
  * @author Ganesh
  */
 @WebServlet(name = "SignUp", urlPatterns = {"/SignUp"})
+
 public class SignUp extends HttpServlet {
-    
+
     private static final long serialVersionUID = 42L;
 
     /**
@@ -31,26 +32,26 @@ public class SignUp extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String name = request.getParameter("name");
-        String email = request.getParameter("mail");
-        String number = request.getParameter("number");
-        String password = request.getParameter("pwd");
         Model.SignUp s = new Model.SignUp();
-        s.setName(name);
-        s.setEmail(email);
-        s.setNumber(number);
-        s.setPassword(password);
-        if (s.verifyData() && s.addUser()) {
-            HttpSession session = request.getSession();
-            session.setAttribute("email", email);
-            session.setAttribute("name", name);
-            session.setAttribute("number", number);
-            session.setAttribute("newUser", "true");
+        HttpSession session = request.getSession();
+        /*Filtering URL Request*/
+        if (request.getParameter("name") != null
+                && request.getParameter("mail") != null
+                && request.getParameter("number") != null
+                && request.getParameter("pwd") != null) {
+            s.setName(request.getParameter("name"));
+            s.setEmail(request.getParameter("mail"));
+            s.setNumber(request.getParameter("number"));
+            s.setPassword(request.getParameter("pwd"));
+            if (s.verifyData() && s.addUser()) {
+                session.setAttribute("email", s.getEmail());
+                session.setAttribute("name", s.getName());
+                session.setAttribute("number", s.getNumber());
+            }
         }
-        response.sendRedirect("Shop.jsp");
+        request.getRequestDispatcher("Shop.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -63,8 +64,7 @@ public class SignUp extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -77,8 +77,7 @@ public class SignUp extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 

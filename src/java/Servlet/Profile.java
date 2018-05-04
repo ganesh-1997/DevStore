@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
  * @author Ganesh
  */
 @WebServlet(name = "Profile", urlPatterns = {"/Profile"})
+
 public class Profile extends HttpServlet {
 
     private static final long serialVersionUID = 42L;
@@ -31,22 +32,30 @@ public class Profile extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String number = request.getParameter("number");
-        HttpSession session = request.getSession();
-        String email = (String) session.getAttribute("email");
         Model.Profile p = new Model.Profile();
-        p.setNumber(number);
-        p.setEmail(email);
-        if (p.checkNumber() && p.updateNumber()) {
-            session.setAttribute("number", number);
-            session.setAttribute("numberUpdated", "true");
+        HttpSession session = request.getSession();
+        /*Filtering URL Request*/
+        if (request.getParameter("number") != null
+                && session.getAttribute("number") != null
+                && session.getAttribute("email") != null) {
+            if (request.getParameter("number").length() == 0) {
+                p.setNumber((String) session.getAttribute("number"));
+            } else {
+                p.setNumber(request.getParameter("number"));
+            }
+            p.setEmail((String) session.getAttribute("email"));
+            if (p.checkNumber() && p.updateNumber()) {
+                session.setAttribute("number", p.getNumber());
+                session.setAttribute("numberUpdated", "true");
+            } else {
+                session.setAttribute("numberUpdated", "false");
+            }
+            request.getRequestDispatcher("Profile.jsp").forward(request, response);
         } else {
-            session.setAttribute("numberUpdated", "false");
+            request.getRequestDispatcher("Shop.jsp").forward(request, response);
         }
-        response.sendRedirect("Profile.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -59,8 +68,7 @@ public class Profile extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -73,8 +81,7 @@ public class Profile extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 

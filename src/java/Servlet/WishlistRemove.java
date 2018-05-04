@@ -12,14 +12,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Ganesh
  */
 @WebServlet(name = "WishlistRemove", urlPatterns = {"/WishlistRemove"})
+
 public class WishlistRemove extends HttpServlet {
-    
+
     private static final long serialVersionUID = 42L;
 
     /**
@@ -31,16 +33,24 @@ public class WishlistRemove extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String productName = request.getParameter("productName");
-        String email = (String) request.getSession().getAttribute("email");
         RemoveFromWishlist r = new RemoveFromWishlist();
-        r.setProductName(productName);
-        r.setEmail(email);
-        boolean removeFromWishlist = r.removeFromWishlist();
-        response.sendRedirect("Wishlist");
+        HttpSession session = request.getSession();
+        /*Filtering URL Request*/
+        if (request.getParameter("productName") != null
+                && session.getAttribute("email") != null) {
+            r.setProductName(request.getParameter("productName"));
+            r.setEmail((String) session.getAttribute("email"));
+            if (r.removeFromWishlist()) {
+                session.setAttribute("removeFromList", "true");
+            } else {
+                session.setAttribute("removeFromList", "false");
+            }
+            request.getRequestDispatcher("Wishlist").forward(request, response);
+        } else {
+            request.getRequestDispatcher("/Shop.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -53,8 +63,7 @@ public class WishlistRemove extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -67,8 +76,7 @@ public class WishlistRemove extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 

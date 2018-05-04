@@ -30,13 +30,17 @@ public class SignIn {
     private String state;
     private String city;
     private String pinCode;
-
+    
     public String getName() {
         return name;
     }
 
     public String getNumber() {
         return number;
+    }
+    
+    public String getEmail() {
+        return email;
     }
 
     public void setEmail(String email) {

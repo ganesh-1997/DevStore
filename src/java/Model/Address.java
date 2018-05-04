@@ -76,20 +76,18 @@ public class Address {
     public boolean updateAddress() {
         DataSource dataSource;
         GetDataSource d = new GetDataSource();
-        if (!(addressLine1.isEmpty() && addressLine2.isEmpty() && state.isEmpty() && city.isEmpty() && pinCode.isEmpty())) {
-            try {
-                dataSource = d.getDataSource();
-                Connection connection = dataSource.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE USERS SET ADDRESSLINE1=?, ADDRESSLINE2=?, STATE=?, CITY=?, PINCODE=? WHERE EMAIL = ?");
-                preparedStatement.setString(1, addressLine1);
-                preparedStatement.setString(2, addressLine2);
-                preparedStatement.setString(3, state);
-                preparedStatement.setString(4, city);
-                preparedStatement.setString(5, pinCode);
-                preparedStatement.setString(6, email);
-                return preparedStatement.executeUpdate() > 0;
-            } catch (NamingException | SQLException ex) {
-            }
+        try {
+            dataSource = d.getDataSource();
+            Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE USERS SET ADDRESSLINE1=?, ADDRESSLINE2=?, STATE=?, CITY=?, PINCODE=? WHERE EMAIL = ?");
+            preparedStatement.setString(1, addressLine1);
+            preparedStatement.setString(2, addressLine2);
+            preparedStatement.setString(3, state);
+            preparedStatement.setString(4, city);
+            preparedStatement.setString(5, pinCode);
+            preparedStatement.setString(6, email);
+            return preparedStatement.executeUpdate() > 0;
+        } catch (NamingException | SQLException ex) {
         }
         return false;
     }
